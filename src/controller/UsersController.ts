@@ -58,8 +58,8 @@ class UsersController {
     deleteUser = async (req: Request, res: Response) => {
         let id = req.params.id;
         let query = `Delete from users_management where id = ?`;
-        let result = await this.userRepository.query(query, [id]);
-        await this.userRepository.delete(id)
+        await this.userRepository.query(query, [id]);
+        // await this.userRepository.delete(id)
         res.redirect(301, '/list');
     }
 
@@ -77,11 +77,11 @@ class UsersController {
             let user = req.body
             if (files.avatar && user.name) {
                 let image = files.avatar as UploadedFile;
-                console.log(image.mv);
+                // console.log(image.mv);
                 image.mv('./public/storage/' + image.name);
                 user.avatar = 'storage/' + image.name;
                 user = await this.userRepository.merge(userUpdate, user)
-                console.log(user)
+                // console.log(user)
                 await this.userRepository.save(user);
                 res.redirect(301, '/list');
             } else {
